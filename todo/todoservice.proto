@@ -1,0 +1,41 @@
+// Copyright 2015 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.dcs.one.todoservice";
+option java_outer_classname = "TodoServiceProto";
+option objc_class_prefix = "TSP";
+
+package todoservice;
+
+// The todo service definition.
+service TodoService {
+  // Sends a request
+  rpc GetTodos (TodoRequest) returns (stream TodoResponse) {}
+}
+
+// The request message containing the todo id
+message TodoRequest {
+  string request = 1;
+}
+
+// The response message containing the todo info
+message TodoResponse {
+  string id = 1;
+  string task = 2;
+  string done = 3;
+  string deleted = 4;
+}

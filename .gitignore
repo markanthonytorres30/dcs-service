@@ -1,0 +1,5 @@
+/.DS_Store
+/.data
+/mysql-init.sql
+/wait-for-mysql.sh
+/wait_for_mysql.py

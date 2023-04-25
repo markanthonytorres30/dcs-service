@@ -1,0 +1,42 @@
+version: "3.8"
+services:
+  dcsone:
+    container_name: dcsone
+    image: mysql
+    volumes:
+      - "./mysql-init.sql:/tmp/mysql-init.sql"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1qazxsw2
+      MYSQL_DATABASE: dcsone_1
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 1qazxsw2
+    ports:
+      - 3306:3306
+    networks:
+      - backend
+    healthcheck:
+      test: '/usr/bin/mysql --user=root --password=1qazxsw2 --execute "SHOW DATABASES;"'
+      interval: 2s
+      timeout: 20s
+      retries: 10
+
+  todos:
+    container_name: todos
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DB_HOST: "dcsone"
+    image: todos
+    links:
+      - dcsone
+    ports:
+      - "50051:50051"
+    networks:
+      - backend
+    depends_on:
+      dcsone:
+        condition: service_healthy
+
+networks:
+  backend:
